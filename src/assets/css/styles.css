@@ -1,0 +1,42 @@
+.app {
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  background-color: #262722;
+  min-height: 100vh;
+}
+
+.header-ruby {
+  color: #a83232;
+}
+
+.header-emerald {
+  color: #32a852;
+}
+
+.header-sapphire {
+  color: #3257a8;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.header {
+  margin-top: 10px;
+}
+
+.header-text {
+  color: #ffc844;
+}
+
+.pokedex-nav {
+  margin-top: 10px;
+}
+
+.card {
+  flex-direction: row;
+  margin-top: 25px;
+}
