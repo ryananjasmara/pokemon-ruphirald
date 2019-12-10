@@ -5,27 +5,24 @@
   min-height: 100vh;
 }
 
-.header-ruby {
+.text-ruby {
   color: #a83232;
 }
 
-.header-emerald {
+.text-emerald {
   color: #32a852;
 }
 
-.header-sapphire {
+.text-sapphire {
   color: #3257a8;
-}
-
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
 
 .header {
   margin-top: 10px;
+}
+
+.footer {
+  margin-bottom: 25px;
 }
 
 .header-text {
@@ -34,9 +31,10 @@
 
 .pokedex-nav {
   margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .card {
-  flex-direction: row;
-  margin-top: 25px;
+  margin-top: 20px;
+  width: 200px;
 }

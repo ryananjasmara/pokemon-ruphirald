@@ -11,9 +11,10 @@ function NavigationsTab({ currentTab, clickHandle }) {
           }}
           color={currentTab === 0 ? "success" : "secondary"}
         >
-          List Pokémon
+          Pokédex List
         </Button>
         <Button
+          disabled={true}
           onClick={() => {
             clickHandle(1);
           }}
