@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-  Table,
   Badge,
   Container,
   Carousel,
@@ -10,81 +9,66 @@ import {
   CarouselCaption,
   Col,
   Row,
-  Jumbotron
+  Card,
+  CardBody,
+  CardTitle,
+  CardText,
+  Button
 } from "reactstrap";
-import axios from "axios";
+import {
+  formatCarouselCaption,
+  pokedexNumberFormat,
+  getColorType,
+  capitalizeFirstLetter
+} from "../../utils/CommonFunction";
 
-function PokemonsDetail() {
-  const [pokemonDetail, setPokemonDetail] = useState("");
-  const [isFetched, setIsFetched] = useState(false);
+const styles = {
+  container: {
+    marginBottom: 25
+  },
+  column: {
+    marginTop: 25
+  },
+  carouselContainer: {
+    backgroundColor: "#454545",
+    borderRadius: 15,
+    minWidth: 250
+  },
+  detailsCard: {
+    backgroundColor: "#ffffff",
+    borderRadius: 15
+  },
+  detailsCardText: {
+    textAlign: "start"
+  },
+  commonBadge: {
+    marginRight: 5
+  }
+};
 
-  // Carousel Images
-  const [pokemonImage, setPokemonImage] = useState("");
-
-  const items = [
-    {
-      src: pokemonImage,
-      altText: "Slide 1",
-      caption: "Slide 1"
-    },
-    {
-      src: pokemonImage,
-      altText: "Slide 2",
-      caption: "Slide 2"
-    },
-    {
-      src: pokemonImage,
-      altText: "Slide 3",
-      caption: "Slide 3"
-    }
-  ];
-
+function PokemonsDetail({ pokemonId, pokemonImage, pokemonDetail }) {
   // State Carousel
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
-
   // Carousel Next Handle
   const next = () => {
     if (animating) return;
-    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+    const nextIndex =
+      activeIndex === pokemonImage.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   };
-
   // Carousel Previous Handle
   const previous = () => {
     if (animating) return;
-    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+    const nextIndex =
+      activeIndex === 0 ? pokemonImage.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   };
-
   // Carousel Go To Index Handle
   const goToIndex = newIndex => {
     if (animating) return;
     setActiveIndex(newIndex);
   };
-
-  useEffect(() => {
-    getData();
-  }, [isFetched]);
-
-  function getData() {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/1/`).then(res => {
-      const { sprites } = res.data;
-      const imageArray = [];
-      for (const key in sprites) {
-        const altText = key;
-        const caption = key;
-        const src = sprites[key];
-        if (altText && caption && src) {
-          imageArray.push({ src, altText, caption });
-        }
-      }
-      setPokemonImage(imageArray);
-      setPokemonDetail(res.data);
-      setIsFetched(true);
-    });
-  }
-
   const slides =
     pokemonImage &&
     pokemonImage.map(item => {
@@ -94,73 +78,136 @@ function PokemonsDetail() {
           onExited={() => setAnimating(false)}
           key={item.src}
         >
-          <img src={item.src} alt={item.altText} width="400" />
+          <img src={item.src} alt={item.altText} width="100%" />
           <CarouselCaption
-            captionText={item.caption}
-            captionHeader={item.caption}
+            captionHeader={formatCarouselCaption(item.altText)}
           />
         </CarouselItem>
       );
     });
+  function renderCarousel() {
+    return (
+      <Carousel activeIndex={activeIndex} next={next} previous={previous}>
+        <CarouselIndicators
+          items={pokemonImage}
+          activeIndex={activeIndex}
+          onClickHandler={goToIndex}
+        />
+        {slides}
+        <CarouselControl
+          direction="prev"
+          directionText="Previous"
+          onClickHandler={previous}
+        />
+        <CarouselControl
+          direction="next"
+          directionText="Next"
+          onClickHandler={next}
+        />
+      </Carousel>
+    );
+  }
 
-  const { moves } = pokemonDetail;
-
-  console.log(pokemonImage);
+  const { moves, abilities, types, species, weight, height } = pokemonDetail;
 
   return (
-    <Container style={{ marginTop: 25 }}>
+    <Container style={styles.container}>
       <Row>
-        <Col>
-          <Carousel activeIndex={activeIndex} next={next} previous={previous}>
-            <CarouselIndicators
-              items={items}
-              activeIndex={activeIndex}
-              onClickHandler={goToIndex}
-            />
-            {slides}
-            <CarouselControl
-              direction="prev"
-              directionText="Previous"
-              onClickHandler={previous}
-            />
-            <CarouselControl
-              direction="next"
-              directionText="Next"
-              onClickHandler={next}
-            />
-          </Carousel>
+        <Col style={styles.column}>
+          <Container style={styles.carouselContainer}>
+            {pokemonImage ? renderCarousel() : null}
+          </Container>
         </Col>
-        <Col>
-          <Table style={{ backgroundColor: "#ffffff" }}>
-            <thead>
-              <tr>
-                <th>Moves List</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <Col style={{ justifyContent: "space-evenly" }}>
-                    <h4>
-                      {moves &&
-                        moves.map((item, index) => {
-                          //   console.log(item);
-                          return (
-                            <Badge
-                              color="dark"
-                              key={index}
-                              style={{ marginLeft: 5, marginRight: 5 }}
-                            >
-                              {item.move.name}
-                            </Badge>
-                          );
-                        })}
-                    </h4>
-                  </Col>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+        <Col style={styles.column}>
+          <Card style={styles.detailsCard}>
+            <CardBody>
+              <CardTitle>
+                <h4>
+                  <Badge color="dark">{pokedexNumberFormat(pokemonId)}</Badge>
+                </h4>
+              </CardTitle>
+              <CardTitle>
+                <h5>{species ? capitalizeFirstLetter(species.name) : null}</h5>
+              </CardTitle>
+              <CardText style={styles.detailsCardText}>
+                <table>
+                  <tr>
+                    <td>Weight</td>
+                    <td>:</td>
+                    <td>
+                      <Container>{weight}</Container>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Height</td>
+                    <td>:</td>
+                    <td>
+                      <Container>{height}</Container>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Types</td>
+                    <td>:</td>
+                    <td>
+                      <Container>
+                        {types &&
+                          types.map(item => {
+                            return (
+                              <Badge
+                                style={{
+                                  marginRight: 5,
+                                  backgroundColor: getColorType(item.type.name)
+                                }}
+                              >
+                                {item.type.name}
+                              </Badge>
+                            );
+                          })}
+                      </Container>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Abilities</td>
+                    <td>:</td>
+                    <td>
+                      <Container>
+                        {abilities &&
+                          abilities.map(item => {
+                            return (
+                              <Badge color="info" style={styles.commonBadge}>
+                                {item.ability.name}
+                              </Badge>
+                            );
+                          })}
+                      </Container>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Moves</td>
+                    <td>:</td>
+                    <td>
+                      <Container>
+                        {moves &&
+                          moves.map(item => {
+                            return (
+                              <Badge
+                                color="secondary"
+                                style={styles.commonBadge}
+                              >
+                                {item.move.name}
+                              </Badge>
+                            );
+                          })}
+                      </Container>
+                    </td>
+                  </tr>
+                </table>
+              </CardText>
+            </CardBody>
+            <CardBody>
+              <Button color="primary">Catch</Button>
+            </CardBody>
+          </Card>
         </Col>
       </Row>
     </Container>

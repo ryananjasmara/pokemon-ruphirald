@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Spinner } from "reactstrap";
-import IfComponent from "../../lib/IfComponent";
+import IfComponent from "../../libs/IfComponent";
 
 function Footer({ isFetching, clickHandle, dataCount }) {
   return (
