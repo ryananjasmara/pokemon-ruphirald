@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { Badge, Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
-import { pokedexNumberFormat } from "../../utils/StringManipulation";
+import { Link } from "react-router-dom";
+import { pokedexNumberFormat } from "../../utils/CommonFunction";
 
 const styles = {
   touched: {
-    opacity: 0.75
+    opacity: 0.5,
+    marginTop: 20
   },
   notTouched: {
-    opacity: 1
+    opacity: 1,
+    marginTop: 20
   }
 };
 
-function PokemonsCard({ index, pokemonName }) {
+function PokemonsCard({ index, pokemonName, handleChangePages }) {
   const [isTouched, setIsTouched] = useState(false);
   const pokemonImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`;
 
@@ -28,19 +31,25 @@ function PokemonsCard({ index, pokemonName }) {
   };
 
   return (
-    <Card
-      style={isTouched ? styles.touched : styles.notTouched}
-      onMouseUp={handleRevert}
-      onMouseDown={handleTouched}
-    >
-      <CardBody>
-        <CardTitle>
-          <Badge color="dark">{pokedexNumberFormat(index)}</Badge>
-        </CardTitle>
-        <CardSubtitle>{pokemonName}</CardSubtitle>
-      </CardBody>
-      <img width="200" src={pokemonImage} alt="" />
-    </Card>
+    <Link to={`/detail/${index}`}>
+      <Card
+        style={isTouched ? styles.touched : styles.notTouched}
+        onMouseUp={handleRevert}
+        onMouseDown={handleTouched}
+      >
+        <CardBody>
+          <CardTitle>
+            <h4>
+              <Badge color="dark">{pokedexNumberFormat(index)}</Badge>
+            </h4>
+          </CardTitle>
+          <CardSubtitle>
+            <h5>{pokemonName}</h5>
+          </CardSubtitle>
+        </CardBody>
+        <img id={pokemonName} width="200" src={pokemonImage} alt="" />
+      </Card>
+    </Link>
   );
 }
 
