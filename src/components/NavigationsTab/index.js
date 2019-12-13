@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Container } from "reactstrap";
+import { stat } from "fs";
 
 const styles = {
   container: {
@@ -11,13 +12,19 @@ const styles = {
   navButton: {
     marginLeft: 5,
     marginRight: 5
+  },
+  link: {
+    textDecoration: "none"
   }
 };
 
 function NavigationsTab(props) {
   // pokemon count from rematch
   const { myPokemon } = props;
-  const myPokemonCounter = myPokemon.length;
+  let myPokemonCounter = myPokemon && myPokemon.length;
+  if (!myPokemonCounter) {
+    myPokemonCounter = 0;
+  }
   // locally get last active tab index incase if page reloaded
   const localCurrentTab = localStorage.getItem("curr");
   // if the local data empty, the initial state will be 0
@@ -35,6 +42,7 @@ function NavigationsTab(props) {
   return (
     <Container style={styles.container}>
       <Link
+        style={styles.link}
         to={`/`}
         onClick={() => {
           setCurrentTab(0);
@@ -49,6 +57,7 @@ function NavigationsTab(props) {
         </Button>
       </Link>
       <Link
+        style={styles.link}
         to={`/mypokemon`}
         onClick={() => {
           setCurrentTab(1);
@@ -56,21 +65,44 @@ function NavigationsTab(props) {
         }}
       >
         <Button
+          disabled={myPokemonCounter === 0 ? true : false}
           style={styles.navButton}
           color={currentTab === 1 ? "success" : "secondary"}
         >
           {`My Pokémon (${myPokemonCounter})`}
         </Button>
       </Link>
+      <Link
+        style={styles.link}
+        to={`/`}
+        onClick={() => {
+          setCurrentTab(0);
+          saveToStorage(0);
+          props.clearData();
+        }}
+      >
+        <Button
+          disabled={myPokemonCounter === 0 ? true : false}
+          style={styles.navButton}
+          color="danger"
+        >
+          Clear Data
+        </Button>
+      </Link>
     </Container>
   );
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    clearData: () => dispatch({ type: "PokemonModels/clearData" })
+  };
+}
+
 function mapStateToProps(state) {
-  console.log(state.PokemonModels);
   return {
     myPokemon: state.PokemonModels.data
   };
 }
 
-export default connect(mapStateToProps)(NavigationsTab);
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationsTab);
