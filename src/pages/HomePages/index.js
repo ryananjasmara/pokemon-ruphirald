@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import { Row, Container, Button } from "reactstrap";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
@@ -76,8 +75,6 @@ function HomePages({ handleChangePages }) {
     <Container>
       {/* Render Pokedex */}
       {renderPokedexTab()}
-
-      {/* <PokemonsDetail /> */}
 
       {/* Load More Button, etc */}
       <Footer

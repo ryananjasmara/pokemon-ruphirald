@@ -41,7 +41,6 @@ function DetailPages(props) {
   }
 
   function handleSavePokemon(pokemonData) {
-    // console.log(pokemonData);
     props.addData(pokemonData);
   }
 

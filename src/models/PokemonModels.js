@@ -2,8 +2,8 @@
 const localPokemonData = JSON.parse(localStorage.getItem("pokemonData"));
 const storageData = [];
 if (localPokemonData) {
-  Object.keys(localPokemonData.data).map(index => {
-    const item = localPokemonData.data[index];
+  Object.keys(localPokemonData).map(index => {
+    const item = localPokemonData[index];
     storageData.push(item);
   });
 }
@@ -14,13 +14,15 @@ export default {
   },
   reducers: {
     addData(prevState, data) {
-      prevState.data.push(data);
-      const updatedData = prevState;
+      const updatedData = [...prevState.data, data];
       localStorage.setItem("pokemonData", JSON.stringify(updatedData));
-      // console.log(updatedData);
-      return updatedData;
+      return {
+        ...prevState,
+        data: updatedData
+      };
     },
     clearData(prevState) {
+      localStorage.clear();
       return {
         ...prevState,
         data: null
@@ -29,7 +31,6 @@ export default {
   },
   effects: {
     async handleData(payload) {
-      //   console.log(payload);
       return this.addData(payload);
     }
   }
