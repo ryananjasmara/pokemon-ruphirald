@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Badge, Card, CardBody, CardTitle, CardSubtitle } from "reactstrap";
+import {
+  Badge,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardText
+} from "reactstrap";
 import { Link } from "react-router-dom";
 import { pokedexNumberFormat } from "../../utils/CommonFunction";
+import IfComponent from "../../libs/IfComponent";
 
 const styles = {
   touched: {
@@ -11,10 +19,13 @@ const styles = {
   notTouched: {
     opacity: 1,
     marginTop: 20
+  },
+  link: {
+    textDecoration: "none"
   }
 };
 
-function PokemonsCard({ index, pokemonName, handleChangePages }) {
+function PokemonsCard({ index, pokemonName, pokemonNick }) {
   const [isTouched, setIsTouched] = useState(false);
   const pokemonImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`;
 
@@ -27,16 +38,17 @@ function PokemonsCard({ index, pokemonName, handleChangePages }) {
   const handleRevert = () => {
     setTimeout(() => {
       setIsTouched(false);
-    }, 150);
+    }, 100);
   };
 
   return (
-    <Link to={`/detail/${index}`}>
-      <Card
-        style={isTouched ? styles.touched : styles.notTouched}
-        onMouseUp={handleRevert}
-        onMouseDown={handleTouched}
-      >
+    <Link
+      style={styles.link}
+      to={`/detail/${index}`}
+      onMouseEnter={handleTouched}
+      onMouseLeave={handleRevert}
+    >
+      <Card style={isTouched ? styles.touched : styles.notTouched}>
         <CardBody>
           <CardTitle>
             <h4>
@@ -46,6 +58,10 @@ function PokemonsCard({ index, pokemonName, handleChangePages }) {
           <CardSubtitle>
             <h5>{pokemonName}</h5>
           </CardSubtitle>
+          <IfComponent
+            ifStatement={pokemonNick}
+            thenRender={<CardText>({pokemonNick})</CardText>}
+          />
         </CardBody>
         <img id={pokemonName} width="200" src={pokemonImage} alt="" />
       </Card>
