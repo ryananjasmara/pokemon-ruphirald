@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Container, Button } from "reactstrap";
+import { connect } from "react-redux";
+import { Row, Container, Button } from "reactstrap";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
-import Header from "../../components/Templates/Header";
 import Footer from "../../components/Templates/Footer";
-import NavigationsTab from "../../components/NavigationsTab";
 import PokemonsCard from "../../components/PokemonsCard";
-import PokemonsDetail from "../../components/PokemonsDetail";
 
 const styles = {
   container: {
@@ -63,6 +61,7 @@ function HomePages({ handleChangePages }) {
             const pokemonName = capitalizeFirstLetter(item.name);
             return (
               <PokemonsCard
+                key={index}
                 index={index + 1}
                 pokemonName={pokemonName}
                 handleChangePages={handleChangePages}
@@ -94,7 +93,7 @@ function HomePages({ handleChangePages }) {
         onClick={handleBackToTop}
         style={styles.floatingButton}
       >
-        <img src={require("../../assets/images/arrow_up.png")} />
+        <img src={require("../../assets/images/arrow_up.png")} alt="" />
       </Button>
     </Container>
   );
