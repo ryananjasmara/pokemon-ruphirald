@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Spinner } from "reactstrap";
@@ -11,7 +12,7 @@ const styles = {
   }
 };
 
-function DetailPages() {
+function DetailPages(props) {
   const [pokemonDetail, setPokemonDetail] = useState("");
   const [pokemonImage, setPokemonImage] = useState("");
   const [isFetched, setIsFetched] = useState(false);
@@ -21,8 +22,8 @@ function DetailPages() {
     getData();
   }, [isFetched]);
 
-  async function getData() {
-    await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => {
+  function getData() {
+    axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => {
       const { sprites } = res.data;
       const imageArray = [];
       for (const key in sprites) {
@@ -39,6 +40,11 @@ function DetailPages() {
     });
   }
 
+  function handleSavePokemon(pokemonData) {
+    // console.log(pokemonData);
+    props.addData(pokemonData);
+  }
+
   return (
     <Container>
       {/* Conditional Render PokemonDetail or Spinner */}
@@ -49,6 +55,7 @@ function DetailPages() {
             pokemonId={id}
             pokemonDetail={pokemonDetail}
             pokemonImage={pokemonImage}
+            handleSavePokemon={handleSavePokemon}
           />
         }
         otherRender={<Spinner color="success" style={styles.spinner}></Spinner>}
@@ -57,4 +64,10 @@ function DetailPages() {
   );
 }
 
-export default DetailPages;
+function mapDispatchToProps(dispatch) {
+  return {
+    addData: payload => dispatch({ type: "PokemonModels/handleData", payload })
+  };
+}
+
+export default connect(null, mapDispatchToProps)(DetailPages);

@@ -1,13 +1,16 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import "./assets/css/styles.css";
 import AppNavigator from "./components/AppNavigator";
+import store from "./rematch";
 
 function App() {
   return (
-    <div className="app">
-      <AppNavigator />
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <AppNavigator />
+      </div>
+    </Provider>
   );
 }
 

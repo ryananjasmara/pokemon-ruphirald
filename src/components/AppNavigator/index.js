@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import { Spinner, Col, Container } from "reactstrap";
+import { Col, Container } from "reactstrap";
 import HomePages from "../../pages/HomePages";
 import DetailPages from "../../pages/DetailPages";
+import MyPokemonpages from "../../pages/MyPokemonPages";
 import Header from "../Templates/Header";
 import NavigationsTab from "../NavigationsTab";
 
@@ -13,22 +15,13 @@ const styles = {
 };
 
 const AppNavigator = () => {
-  const [currentTab, setCurrentTab] = useState(0);
-
-  function handleChangeTab(value) {
-    setCurrentTab(value);
-  }
-
   return (
     <Router>
       <Container style={styles.container}>
         <Col>
           {/* Apps Title & Navigation */}
           <Header />
-          <NavigationsTab
-            currentTab={currentTab}
-            clickHandle={handleChangeTab}
-          />
+          <NavigationsTab />
 
           {/* Switch Section - Will Render Depend The Page */}
           <Switch>
@@ -37,6 +30,9 @@ const AppNavigator = () => {
             </Route>
             <Route path="/detail/:id">
               <DetailPages />
+            </Route>
+            <Route path="/mypokemon">
+              <MyPokemonpages />
             </Route>
           </Switch>
         </Col>
