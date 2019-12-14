@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Container } from "reactstrap";
-import { stat } from "fs";
 
 const styles = {
   container: {
