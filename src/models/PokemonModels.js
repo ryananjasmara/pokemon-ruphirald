@@ -14,7 +14,12 @@ export default {
   },
   reducers: {
     addData(prevState, data) {
-      const updatedData = [...prevState.data, data];
+      let updatedData;
+      if (prevState.data) {
+        updatedData = [...prevState.data, data];
+      } else {
+        updatedData = [data];
+      }
       localStorage.setItem("pokemonData", JSON.stringify(updatedData));
       return {
         ...prevState,
