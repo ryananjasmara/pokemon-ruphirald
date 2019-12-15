@@ -9,6 +9,7 @@ const styles = {
     marginBottom: 15
   },
   navButton: {
+    marginTop: 10,
     marginLeft: 5,
     marginRight: 5
   },

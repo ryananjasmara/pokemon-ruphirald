@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Container, Spinner } from "reactstrap";
 import IfComponent from "../../libs/IfComponent";
+import CustomAlert from "../../libs/CustomAlert";
 import PokemonsDetail from "../../components/PokemonsDetail";
 
 const styles = {
@@ -16,6 +17,7 @@ function DetailPages(props) {
   const [pokemonDetail, setPokemonDetail] = useState("");
   const [pokemonImage, setPokemonImage] = useState("");
   const [isFetched, setIsFetched] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -42,6 +44,10 @@ function DetailPages(props) {
 
   function handleSavePokemon(pokemonData) {
     props.addData(pokemonData);
+    setIsAlertVisible(true);
+    setTimeout(() => {
+      setIsAlertVisible(false);
+    }, 3000);
   }
 
   return (
@@ -58,6 +64,12 @@ function DetailPages(props) {
           />
         }
         otherRender={<Spinner color="success" style={styles.spinner}></Spinner>}
+      />
+      <IfComponent
+        ifStatement={isAlertVisible}
+        thenRender={
+          <CustomAlert message="Sucessfully Catch Pokemon" color="success" />
+        }
       />
     </Container>
   );
