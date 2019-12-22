@@ -28,6 +28,7 @@ function HomePages({ handleChangePages }) {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentData]);
 
   function handleLoadMore(value) {
