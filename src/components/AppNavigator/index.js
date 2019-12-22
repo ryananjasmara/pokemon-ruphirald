@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import { Col, Container } from "reactstrap";
 import HomePages from "../../pages/HomePages";
