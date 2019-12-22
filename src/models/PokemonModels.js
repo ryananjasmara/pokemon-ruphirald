@@ -5,6 +5,7 @@ if (localPokemonData) {
   Object.keys(localPokemonData).map(index => {
     const item = localPokemonData[index];
     storageData.push(item);
+    return null;
   });
 }
 

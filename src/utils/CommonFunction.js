@@ -33,6 +33,7 @@ export function formatCarouselCaption(string) {
       default:
         break;
     }
+    return null;
   });
   return result;
 }
