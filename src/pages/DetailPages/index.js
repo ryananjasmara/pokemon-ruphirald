@@ -78,7 +78,8 @@ function DetailPages(props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addData: payload => dispatch({ type: "PokemonModels/handleData", payload })
+    addData: payload =>
+      dispatch({ type: "MyPokemonModels/handleData", payload })
   };
 }
 

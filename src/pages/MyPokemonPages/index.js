@@ -68,7 +68,7 @@ function MyPokemonPages(props) {
 
 function mapStateToProps(state) {
   return {
-    myPokemon: state.PokemonModels.data
+    myPokemon: state.MyPokemonModels.data
   };
 }
 
