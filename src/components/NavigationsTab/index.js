@@ -95,13 +95,13 @@ function NavigationsTab(props) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    clearData: () => dispatch({ type: "PokemonModels/clearData" })
+    clearData: () => dispatch({ type: "MyPokemonModels/clearData" })
   };
 }
 
 function mapStateToProps(state) {
   return {
-    myPokemon: state.PokemonModels.data
+    myPokemon: state.MyPokemonModels.data
   };
 }
 
