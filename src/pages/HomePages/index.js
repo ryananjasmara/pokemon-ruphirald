@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import { Row, Container, Button } from "reactstrap";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
@@ -97,4 +98,18 @@ function HomePages({ handleChangePages }) {
   );
 }
 
-export default HomePages;
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    pokemonList: state.PokemonListModels.data
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addData: payload =>
+      dispatch({ type: "PokemonListModels/handleData", payload })
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePages);
