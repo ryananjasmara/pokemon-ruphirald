@@ -58,7 +58,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
       {renderPokedexTab(data)}
 
       {/* Load More Button, etc */}
-      <Footer isFetching={isFetching} />
+      <Footer isFetching={isFetching} countData={data && data.length} />
 
       {/* Floating Button */}
       <Button
@@ -81,8 +81,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchPokemonList: () =>
-      dispatch({ type: "PokemonListModel/fetchPokemonList" })
+    fetchPokemonList: (countData) =>
+      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData, limit: countData + 10 } })
   };
 }
 
