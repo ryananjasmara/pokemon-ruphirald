@@ -25,7 +25,9 @@ const styles = {
 function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
 
   useEffect(() => {
-    fetchPokemonList(0);
+    if (pokemonList.data.length === 0){
+      fetchPokemonList(0);
+    }
   }, [])
   
   const handleBackToTop = () => {
@@ -35,7 +37,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
   function renderPokedexTab(data) {
     return (
       <Row style={styles.cardContainer}>
-        {data && data.map((item, index) => {
+        {data.map((item, index) => {
             const pokemonName = capitalizeFirstLetter(item.name);
             return (
               <PokemonsCard
