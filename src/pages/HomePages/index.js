@@ -82,7 +82,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchPokemonList: (countData) =>
-      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData, limit: 10 } })
+      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData } })
   };
 }
 
