@@ -1,7 +1,7 @@
 import MyPokemonModels from "../models/MyPokemonModels";
-import PokemonListModels from "../models/PokemonListModels";
+import PokemonListModel from "../models/PokemonListModel";
 
 export default {
   MyPokemonModels,
-  PokemonListModels
+  PokemonListModel
 };

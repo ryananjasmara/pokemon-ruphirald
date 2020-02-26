@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+=======
+import React, { useEffect } from "react";
+import { connect } from 'react-redux';
+>>>>>>> 4719dc5a555e44580f85c1b9b480aa0e5cef81f4
 import { Row, Container, Button } from "reactstrap";
-import axios from "axios";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
 import Footer from "../../components/Templates/Footer";
 import PokemonsCard from "../../components/PokemonsCard";
@@ -22,43 +26,22 @@ const styles = {
   }
 };
 
-function HomePages({ handleChangePages }) {
-  const [currentData, setCurrentData] = useState(0);
-  const [pokemonData, setPokemonData] = useState("");
-  const [isFetching, setIsFetching] = useState(false);
+function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
 
   useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentData]);
-
-  function handleLoadMore(value) {
-    setCurrentData(value);
-  }
-
+    if (pokemonList.data.length === 0){
+      fetchPokemonList(0);
+    }
+  }, [fetchPokemonList, pokemonList.data.length])
+  
   const handleBackToTop = () => {
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
 
-  function getData() {
-    const offset = currentData;
-    const limit = 10;
-
-    setIsFetching(true);
-
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`)
-      .then(res => {
-        setPokemonData([...pokemonData, ...res.data.results]);
-        setIsFetching(false);
-      });
-  }
-
-  function renderPokedexTab() {
+  function renderPokedexTab(data) {
     return (
       <Row style={styles.cardContainer}>
-        {pokemonData &&
-          pokemonData.map((item, index) => {
+        {data.map((item, index) => {
             const pokemonName = capitalizeFirstLetter(item.name);
             return (
               <PokemonsCard
@@ -73,17 +56,15 @@ function HomePages({ handleChangePages }) {
     );
   }
 
+  const { isFetching, data } = pokemonList;
+
   return (
     <Container>
       {/* Render Pokedex */}
-      {renderPokedexTab()}
+      {renderPokedexTab(data)}
 
       {/* Load More Button, etc */}
-      <Footer
-        isFetching={isFetching}
-        clickHandle={handleLoadMore}
-        dataCount={currentData}
-      />
+      <Footer isFetching={isFetching} countData={data.length} />
 
       {/* Floating Button */}
       <Button
@@ -99,16 +80,15 @@ function HomePages({ handleChangePages }) {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
-    pokemonList: state.PokemonListModels.data
+    pokemonList: state.PokemonListModel
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addData: payload =>
-      dispatch({ type: "PokemonListModels/handleData", payload })
+    fetchPokemonList: (countData) =>
+      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData } })
   };
 }
 

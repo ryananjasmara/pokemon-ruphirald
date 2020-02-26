@@ -1,8 +1,9 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { Button, Spinner } from "reactstrap";
 import IfComponent from "../../libs/IfComponent";
 
-function Footer({ isFetching, clickHandle, dataCount }) {
+function Footer({ isFetching, countData, fetchPokemonList }) {
   return (
     <div className="footer">
       <IfComponent
@@ -11,7 +12,7 @@ function Footer({ isFetching, clickHandle, dataCount }) {
           <Button
             color="success"
             onClick={() => {
-              clickHandle(dataCount + 10);
+              fetchPokemonList(countData);
             }}
           >
             Load More
@@ -23,4 +24,11 @@ function Footer({ isFetching, clickHandle, dataCount }) {
   );
 }
 
-export default Footer;
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchPokemonList: (countData) =>
+      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData } })
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Footer);
