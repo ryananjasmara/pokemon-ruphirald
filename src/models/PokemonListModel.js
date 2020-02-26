@@ -1,8 +1,13 @@
-export default {
+import axios from "axios";
+
+const LIMIT = 10;
+
+const pokemonList = {
   state: {
     data: [],
     isFetching: false,
-    error: false
+    error: false,
+    countData: 0
   },
   reducers: {
     request(prevState) {
@@ -14,11 +19,13 @@ export default {
         }
     },
     success(prevState, data) {
+      console.log('sukses', prevState);
       return {
         ...prevState,
-        data,
+        data: [...prevState.data, ...data],
         isFetching: false,
-        error: false
+        error: false,
+        countData: prevState.countData + LIMIT,
       }
     },
     failure(prevState, error) {
@@ -31,8 +38,20 @@ export default {
     }
   },
   effects: {
-    async fetchPokemonList(payload) {
-      return this.addData(payload);
+    async fetchPokemonList() {
+      this.request();
+      const offset = pokemonList.state.countData;
+      console.log(offset);
+      console.log(LIMIT);
+      return axios
+      .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${LIMIT}`)
+      .then(res => {
+        this.success(res.data.results);
+      }).catch(error => {
+        this.failure(error);
+      });
     }
   }
 };
+
+export default pokemonList;
