@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from 'react-redux';
 import { Row, Container, Button } from "reactstrap";
-import axios from "axios";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
 import Footer from "../../components/Templates/Footer";
 import PokemonsCard from "../../components/PokemonsCard";
@@ -28,7 +27,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
     if (pokemonList.data.length === 0){
       fetchPokemonList(0);
     }
-  }, [])
+  }, [fetchPokemonList, pokemonList.data.length])
   
   const handleBackToTop = () => {
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
@@ -60,7 +59,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
       {renderPokedexTab(data)}
 
       {/* Load More Button, etc */}
-      <Footer isFetching={isFetching} countData={data && data.length} />
+      <Footer isFetching={isFetching} countData={data.length} />
 
       {/* Floating Button */}
       <Button
