@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-=======
 import React, { useEffect } from "react";
 import { connect } from 'react-redux';
->>>>>>> 4719dc5a555e44580f85c1b9b480aa0e5cef81f4
 import { Row, Container, Button } from "reactstrap";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
 import Footer from "../../components/Templates/Footer";
@@ -81,14 +76,14 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
 
 function mapStateToProps(state) {
   return {
-    pokemonList: state.PokemonListModel
+    pokemonList: state.PokemonListModels
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchPokemonList: (countData) =>
-      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData } })
+      dispatch({ type: "PokemonListModels/fetchPokemonList", payload: { offset: countData } })
   };
 }
 

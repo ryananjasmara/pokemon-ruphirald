@@ -1,24 +1,51 @@
-export default {
+import axios from "axios";
+
+const pokemonList = {
   state: {
-    data: []
+    data: [],
+    isFetching: false,
+    error: false
   },
   reducers: {
-    addData(prevState, data) {
-      return {
-        ...prevState,
-        data: [...prevState.data, data]
-      };
+    request(prevState) {
+        return {
+          ...prevState,
+          isFetching: true,
+          error: false
+        }
     },
-    clearData(prevState) {
+    success(prevState, data) {
+      console.log(prevState);
       return {
         ...prevState,
-        data: null
-      };
+        data: [...prevState.data, ...data],
+        isFetching: false,
+        error: false
+      }
+    },
+    failure(prevState, error) {
+      return {
+        ...prevState,
+        data: [],
+        isFetching: false,
+        error
+      }
     }
   },
   effects: {
-    async handleData(payload) {
-      return this.addData(payload);
+    async fetchPokemonList(payload) {
+      console.log(payload);
+      this.request();
+      const { offset } = payload;
+      return axios
+      .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=10`)
+      .then(res => {
+        this.success(res.data.results);
+      }).catch(error => {
+        this.failure(error);
+      });
     }
   }
 };
+
+export default pokemonList;

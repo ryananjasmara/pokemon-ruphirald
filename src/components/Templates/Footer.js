@@ -27,7 +27,7 @@ function Footer({ isFetching, countData, fetchPokemonList }) {
 function mapDispatchToProps(dispatch) {
   return {
     fetchPokemonList: (countData) =>
-      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData } })
+      dispatch({ type: "PokemonListModels/fetchPokemonList", payload: { offset: countData } })
   };
 }
 
