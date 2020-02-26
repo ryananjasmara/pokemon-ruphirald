@@ -76,14 +76,14 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
 
 function mapStateToProps(state) {
   return {
-    pokemonList: state.PokemonListModel
+    pokemonList: state.PokemonListModels
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchPokemonList: (countData) =>
-      dispatch({ type: "PokemonListModel/fetchPokemonList", payload: { offset: countData } })
+      dispatch({ type: "PokemonListModels/fetchPokemonList", payload: { offset: countData } })
   };
 }
 
