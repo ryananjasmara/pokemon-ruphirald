@@ -1,31 +1,26 @@
 import axios from "axios";
 
-const LIMIT = 10;
-
 const pokemonList = {
   state: {
     data: [],
     isFetching: false,
-    error: false,
-    countData: 0
+    error: false
   },
   reducers: {
     request(prevState) {
         return {
           ...prevState,
-          data: [],
           isFetching: true,
           error: false
         }
     },
     success(prevState, data) {
-      console.log('sukses', prevState);
+      console.log(prevState);
       return {
         ...prevState,
         data: [...prevState.data, ...data],
         isFetching: false,
-        error: false,
-        countData: prevState.countData + LIMIT,
+        error: false
       }
     },
     failure(prevState, error) {
@@ -38,13 +33,12 @@ const pokemonList = {
     }
   },
   effects: {
-    async fetchPokemonList() {
+    async fetchPokemonList(payload) {
+      console.log(payload);
       this.request();
-      const offset = pokemonList.state.countData;
-      console.log(offset);
-      console.log(LIMIT);
+      const { offset, limit } = payload;
       return axios
-      .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${LIMIT}`)
+      .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`)
       .then(res => {
         this.success(res.data.results);
       }).catch(error => {
