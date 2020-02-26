@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
 import { Row, Container, Button } from "reactstrap";
 import axios from "axios";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
@@ -21,43 +22,20 @@ const styles = {
   }
 };
 
-function HomePages({ handleChangePages }) {
-  const [currentData, setCurrentData] = useState(0);
-  const [pokemonData, setPokemonData] = useState("");
-  const [isFetching, setIsFetching] = useState(false);
+function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
 
   useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentData]);
-
-  function handleLoadMore(value) {
-    setCurrentData(value);
-  }
-
+    fetchPokemonList();
+  }, [])
+  
   const handleBackToTop = () => {
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
   };
 
-  function getData() {
-    const offset = currentData;
-    const limit = 10;
-
-    setIsFetching(true);
-
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`)
-      .then(res => {
-        setPokemonData([...pokemonData, ...res.data.results]);
-        setIsFetching(false);
-      });
-  }
-
-  function renderPokedexTab() {
+  function renderPokedexTab(data) {
     return (
       <Row style={styles.cardContainer}>
-        {pokemonData &&
-          pokemonData.map((item, index) => {
+        {data && data.map((item, index) => {
             const pokemonName = capitalizeFirstLetter(item.name);
             return (
               <PokemonsCard
@@ -72,17 +50,15 @@ function HomePages({ handleChangePages }) {
     );
   }
 
+  const { isFetching, data } = pokemonList;
+
   return (
     <Container>
       {/* Render Pokedex */}
-      {renderPokedexTab()}
+      {renderPokedexTab(data)}
 
       {/* Load More Button, etc */}
-      <Footer
-        isFetching={isFetching}
-        clickHandle={handleLoadMore}
-        dataCount={currentData}
-      />
+      <Footer isFetching={isFetching} />
 
       {/* Floating Button */}
       <Button
@@ -97,4 +73,17 @@ function HomePages({ handleChangePages }) {
   );
 }
 
-export default HomePages;
+function mapStateToProps(state) {
+  return {
+    pokemonList: state.PokemonListModel
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchPokemonList: () =>
+      dispatch({ type: "PokemonListModel/fetchPokemonList" })
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePages);
