@@ -6,6 +6,7 @@ import { Container, Spinner } from "reactstrap";
 import IfComponent from "../../libs/IfComponent";
 import CustomAlert from "../../libs/CustomAlert";
 import PokemonsDetail from "../../components/PokemonsDetail";
+import { formatCarouselCaption } from "../../utils/CommonFunction";
 
 const styles = {
   spinner: {
@@ -30,14 +31,24 @@ function DetailPages(props) {
       const { sprites } = res.data;
       const imageArray = [];
       for (const key in sprites) {
-        const altText = key;
+        const altText = formatCarouselCaption(key);
         const src = sprites[key];
         if (altText && src) {
           imageArray.push({ src, altText });
         }
       }
+      const defaultSprite = [];
+      const shinySprite = [];
       imageArray.reverse();
-      setPokemonImage(imageArray);
+      imageArray.map((item) => {
+        console.log(item);
+        if (item.altText.includes('Shiny')) {
+          shinySprite.push(item);
+        } else {
+          defaultSprite.push(item);
+        }
+      })
+      setPokemonImage([...defaultSprite, ...shinySprite]);
       setPokemonDetail(res.data);
       setIsFetched(true);
     });

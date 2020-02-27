@@ -23,7 +23,6 @@ import {
   FormGroup
 } from "reactstrap";
 import {
-  formatCarouselCaption,
   pokedexNumberFormat,
   getColorType,
   capitalizeFirstLetter
@@ -97,7 +96,7 @@ function PokemonsDetail({
         <CarouselItem key={item.src}>
           <img src={item.src} alt={item.altText} width="100%" />
           <CarouselCaption
-            captionHeader={formatCarouselCaption(item.altText)}
+            captionHeader={item.altText}
             captionText={""}
           />
         </CarouselItem>
