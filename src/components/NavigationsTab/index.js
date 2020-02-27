@@ -76,9 +76,12 @@ function NavigationsTab(props) {
         style={styles.link}
         to={`/`}
         onClick={() => {
-          setCurrentTab(0);
-          saveToStorage(0);
-          props.clearData();
+          const confirm = window.confirm('Do you really want to clear your pokemon data?');
+          if (confirm) {
+            setCurrentTab(0);
+            saveToStorage(0);
+            props.clearData();
+          }
         }}
       >
         <Button
