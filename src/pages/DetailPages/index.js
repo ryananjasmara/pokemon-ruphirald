@@ -41,7 +41,6 @@ function DetailPages(props) {
       const shinySprite = [];
       imageArray.reverse();
       imageArray.map((item) => {
-        console.log(item);
         if (item.altText.includes('Shiny')) {
           shinySprite.push(item);
         } else {
