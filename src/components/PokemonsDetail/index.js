@@ -177,7 +177,7 @@ function PokemonsDetail({
     if (result >= 50) {
       data = {
         success: true,
-        title: "Congratulation !",
+        title: "Congratulation!",
         message: `You've just caught ${capitalizeFirstLetter(
           species.name
         )}. Let's pick a nickname`
@@ -185,7 +185,7 @@ function PokemonsDetail({
     } else {
       data = {
         success: false,
-        title: "Too Bad !",
+        title: "Too Bad!",
         message: `You've failed to caught ${capitalizeFirstLetter(
           species.name
         )}.`
