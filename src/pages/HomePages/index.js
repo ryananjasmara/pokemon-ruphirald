@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { connect } from 'react-redux';
-import { Row, Container, Button } from "reactstrap";
+import { Row, Container, Button, Spinner } from "reactstrap";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
-import Footer from "../../components/Templates/Footer";
 import PokemonsCard from "../../components/PokemonsCard";
+import IfComponent from "../../libs/IfComponent";
 
 const styles = {
   container: {
@@ -59,7 +59,22 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
       {renderPokedexTab(data)}
 
       {/* Load More Button, etc */}
-      <Footer isFetching={isFetching} countData={data.length} />
+      <div className="footer">
+        <IfComponent
+          ifStatement={!isFetching}
+          thenRender={
+            <Button
+              color="success"
+              onClick={() => {
+                fetchPokemonList(data.length);
+              }}
+            >
+              Load More
+            </Button>
+          }
+          otherRender={<Spinner color="success" />}
+        />
+      </div>
 
       {/* Floating Button */}
       <Button
