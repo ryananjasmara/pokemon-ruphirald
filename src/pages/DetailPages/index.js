@@ -7,6 +7,7 @@ import IfComponent from "../../libs/IfComponent";
 import CustomAlert from "../../libs/CustomAlert";
 import PokemonsDetail from "../../components/PokemonsDetail";
 import { formatCarouselCaption } from "../../utils/CommonFunction";
+import NavigationsTab from "../../components/NavigationsTab";
 
 const styles = {
   spinner: {
@@ -62,6 +63,8 @@ function DetailPages(props) {
   }
 
   return (
+    <>
+    <NavigationsTab />
     <Container>
       {/* Conditional Render PokemonDetail or Spinner */}
       <IfComponent
@@ -83,6 +86,7 @@ function DetailPages(props) {
         }
       />
     </Container>
+    </>
   );
 }
 

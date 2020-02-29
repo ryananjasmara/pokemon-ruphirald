@@ -4,6 +4,7 @@ import { Row, Container, Button, Spinner } from "reactstrap";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
 import PokemonsCard from "../../components/PokemonsCard";
 import IfComponent from "../../libs/IfComponent";
+import NavigationsTab from "../../components/NavigationsTab";
 
 const styles = {
   container: {
@@ -35,6 +36,8 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
 
   function renderPokedexTab(data) {
     return (
+      <>
+      <NavigationsTab />
       <Row style={styles.cardContainer}>
         {data.map((item, index) => {
             const pokemonName = capitalizeFirstLetter(item.name);
@@ -48,6 +51,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
             );
           })}
       </Row>
+      </>
     );
   }
 

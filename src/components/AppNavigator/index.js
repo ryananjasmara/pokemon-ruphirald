@@ -5,7 +5,6 @@ import HomePages from "../../pages/HomePages";
 import DetailPages from "../../pages/DetailPages";
 import MyPokemonpages from "../../pages/MyPokemonPages";
 import Header from "../Templates/Header";
-import NavigationsTab from "../NavigationsTab";
 
 const styles = {
   container: {
@@ -20,7 +19,6 @@ const AppNavigator = () => {
         <Col>
           {/* Apps Title & Navigation */}
           <Header />
-          <NavigationsTab />
 
           {/* Switch Section - Will Render Depend The Page */}
           <Switch>
