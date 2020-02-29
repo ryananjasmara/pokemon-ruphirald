@@ -4,6 +4,7 @@ import { Container, Row, Button } from "reactstrap";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
 import PokemonsCard from "../../components/PokemonsCard";
 import NavigationsTab from "../../components/NavigationsTab";
+import { PAGES } from '../../configs/constants';
 
 const styles = {
   container: {
@@ -22,7 +23,6 @@ const styles = {
 };
 
 function MyPokemonPages(props) {
-  const activeTab = "MY_POKEMON_TAB";
   const { myPokemon } = props;
 
   const handleBackToTop = () => {
@@ -52,7 +52,7 @@ function MyPokemonPages(props) {
 
   return (
     <>
-    <NavigationsTab activeTab={activeTab} />
+    <NavigationsTab activeTab={PAGES.MY_POKEMON} />
     <Container>
       {/* Render MyPokemon */}
       {renderMyPokemonTab()}
