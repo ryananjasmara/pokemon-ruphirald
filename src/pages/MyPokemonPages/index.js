@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Container, Row, Button } from "reactstrap";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
 import PokemonsCard from "../../components/PokemonsCard";
+import NavigationsTab from "../../components/NavigationsTab";
 
 const styles = {
   container: {
@@ -21,6 +22,7 @@ const styles = {
 };
 
 function MyPokemonPages(props) {
+  const activeTab = "MY_POKEMON_TAB";
   const { myPokemon } = props;
 
   const handleBackToTop = () => {
@@ -49,6 +51,8 @@ function MyPokemonPages(props) {
   }
 
   return (
+    <>
+    <NavigationsTab activeTab={activeTab} />
     <Container>
       {/* Render MyPokemon */}
       {renderMyPokemonTab()}
@@ -63,6 +67,7 @@ function MyPokemonPages(props) {
         <img src={require("../../assets/images/arrow_up.png")} alt="" />
       </Button>
     </Container>
+    </>
   );
 }
 

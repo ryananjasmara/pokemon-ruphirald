@@ -18,25 +18,18 @@ const styles = {
   }
 };
 
+const SCREEN_TAB = {
+  HOME_TAB: "HOME_TAB",
+  MY_POKEMON_TAB: "MY_POKEMON_TAB",
+  ACTION_CLEAR: "ACTION_CLEAR"
+}
+
 function NavigationsTab(props) {
   // pokemon count from rematch
-  const { myPokemon } = props;
+  const { myPokemon, activeTab } = props;
   let myPokemonCounter = myPokemon && myPokemon.length;
   if (!myPokemonCounter) {
     myPokemonCounter = 0;
-  }
-  // locally get last active tab index incase if page reloaded
-  const localCurrentTab = localStorage.getItem("curr");
-  // if the local data empty, the initial state will be 0
-  let initialCurrentTab = 0;
-  if (localCurrentTab) {
-    initialCurrentTab = parseInt(localCurrentTab);
-  }
-  // state for tab active
-  const [currentTab, setCurrentTab] = useState(initialCurrentTab);
-  // handle to save state to storage
-  function saveToStorage(value) {
-    localStorage.setItem("curr", value);
   }
 
   return (
@@ -44,14 +37,10 @@ function NavigationsTab(props) {
       <Link
         style={styles.link}
         to={`/`}
-        onClick={() => {
-          setCurrentTab(0);
-          saveToStorage(0);
-        }}
       >
         <Button
           style={styles.navButton}
-          color={currentTab === 0 ? "success" : "secondary"}
+          color={activeTab === SCREEN_TAB.HOME_TAB ? "success" : "secondary"}
         >
           Pokédex List
         </Button>
@@ -59,15 +48,11 @@ function NavigationsTab(props) {
       <Link
         style={styles.link}
         to={`/mypokemon`}
-        onClick={() => {
-          setCurrentTab(1);
-          saveToStorage(1);
-        }}
       >
         <Button
           disabled={myPokemonCounter === 0 ? true : false}
           style={styles.navButton}
-          color={currentTab === 1 ? "success" : "secondary"}
+          color={activeTab === SCREEN_TAB.MY_POKEMON_TAB ? "success" : "secondary"}
         >
           {`My Pokémon (${myPokemonCounter})`}
         </Button>
@@ -78,8 +63,6 @@ function NavigationsTab(props) {
         onClick={() => {
           const confirm = window.confirm('Do you really want to clear your pokemon data?');
           if (confirm) {
-            setCurrentTab(0);
-            saveToStorage(0);
             props.clearData();
           }
         }}
