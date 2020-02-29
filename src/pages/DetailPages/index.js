@@ -8,6 +8,7 @@ import CustomAlert from "../../libs/CustomAlert";
 import PokemonsDetail from "../../components/PokemonsDetail";
 import { formatCarouselCaption } from "../../utils/CommonFunction";
 import NavigationsTab from "../../components/NavigationsTab";
+import { PAGES } from '../../configs/constants';
 
 const styles = {
   spinner: {
@@ -16,7 +17,6 @@ const styles = {
 };
 
 function DetailPages(props) {
-  const activeTab = "HOME_TAB";
   const [pokemonDetail, setPokemonDetail] = useState("");
   const [pokemonImage, setPokemonImage] = useState("");
   const [isFetched, setIsFetched] = useState(false);
@@ -65,7 +65,7 @@ function DetailPages(props) {
 
   return (
     <>
-    <NavigationsTab activeTab={activeTab} />
+    <NavigationsTab activeTab={PAGES.DETAIL_POKEMON} />
     <Container>
       {/* Conditional Render PokemonDetail or Spinner */}
       <IfComponent

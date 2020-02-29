@@ -5,6 +5,7 @@ import HomePages from "../../pages/HomePages";
 import DetailPages from "../../pages/DetailPages";
 import MyPokemonpages from "../../pages/MyPokemonPages";
 import Header from "../Templates/Header";
+import { PAGES } from '../../configs/constants';
 
 const styles = {
   container: {
@@ -22,13 +23,13 @@ const AppNavigator = () => {
 
           {/* Switch Section - Will Render Depend The Page */}
           <Switch>
-            <Route exact path="/">
+            <Route exact path={PAGES.HOME}>
               <HomePages />
             </Route>
-            <Route path="/detail/:id">
+            <Route path={PAGES.DETAIL_POKEMON}>
               <DetailPages />
             </Route>
-            <Route path="/mypokemon">
+            <Route path={PAGES.MY_POKEMON}>
               <MyPokemonpages />
             </Route>
           </Switch>

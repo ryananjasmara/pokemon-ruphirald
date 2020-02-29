@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button, Container } from "reactstrap";
+import { PAGES } from '../../configs/constants';
 
 const styles = {
   container: {
@@ -18,13 +19,8 @@ const styles = {
   }
 };
 
-const SCREEN_TAB = {
-  HOME_TAB: "HOME_TAB",
-  MY_POKEMON_TAB: "MY_POKEMON_TAB",
-  ACTION_CLEAR: "ACTION_CLEAR"
-}
-
 function NavigationsTab(props) {
+  console.log(props);
   // pokemon count from rematch
   const { myPokemon, activeTab } = props;
   let myPokemonCounter = myPokemon && myPokemon.length;
@@ -40,7 +36,7 @@ function NavigationsTab(props) {
       >
         <Button
           style={styles.navButton}
-          color={activeTab === SCREEN_TAB.HOME_TAB ? "success" : "secondary"}
+          color={activeTab === PAGES.HOME ? "success" : "secondary"}
         >
           Pokédex List
         </Button>
@@ -52,14 +48,14 @@ function NavigationsTab(props) {
         <Button
           disabled={myPokemonCounter === 0 ? true : false}
           style={styles.navButton}
-          color={activeTab === SCREEN_TAB.MY_POKEMON_TAB ? "success" : "secondary"}
+          color={activeTab === PAGES.MY_POKEMON ? "success" : "secondary"}
         >
           {`My Pokémon (${myPokemonCounter})`}
         </Button>
       </Link>
       <Link
         style={styles.link}
-        to={`/`}
+        to={activeTab}
         onClick={() => {
           const confirm = window.confirm('Do you really want to clear your pokemon data?');
           if (confirm) {

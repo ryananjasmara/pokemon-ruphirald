@@ -5,6 +5,7 @@ import { capitalizeFirstLetter } from "../../utils/CommonFunction";
 import PokemonsCard from "../../components/PokemonsCard";
 import IfComponent from "../../libs/IfComponent";
 import NavigationsTab from "../../components/NavigationsTab";
+import { PAGES } from '../../configs/constants';
 
 const styles = {
   container: {
@@ -23,8 +24,6 @@ const styles = {
 };
 
 function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
-  const activeTab = "HOME_TAB";
-
   useEffect(() => {
     if (pokemonList.data.length === 0){
       fetchPokemonList(0);
@@ -38,7 +37,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
   function renderPokedexTab(data) {
     return (
       <>
-      <NavigationsTab activeTab={activeTab} />
+      <NavigationsTab activeTab={PAGES.HOME} />
       <Row style={styles.cardContainer}>
         {data.map((item, index) => {
             const pokemonName = capitalizeFirstLetter(item.name);
