@@ -18,9 +18,16 @@ const styles = {
   }
 };
 
+const SCREEN_TAB = {
+  HOME_TAB: "HOME_TAB",
+  MY_POKEMON_TAB: "MY_POKEMON_TAB",
+  ACTION_CLEAR: "ACTION_CLEAR"
+}
+
 function NavigationsTab(props) {
   // pokemon count from rematch
-  const { myPokemon } = props;
+  const { myPokemon, activeTab } = props;
+  console.log(activeTab);
   let myPokemonCounter = myPokemon && myPokemon.length;
   if (!myPokemonCounter) {
     myPokemonCounter = 0;
@@ -51,7 +58,7 @@ function NavigationsTab(props) {
       >
         <Button
           style={styles.navButton}
-          color={currentTab === 0 ? "success" : "secondary"}
+          color={activeTab === SCREEN_TAB.HOME_TAB ? "success" : "secondary"}
         >
           Pokédex List
         </Button>
@@ -67,7 +74,7 @@ function NavigationsTab(props) {
         <Button
           disabled={myPokemonCounter === 0 ? true : false}
           style={styles.navButton}
-          color={currentTab === 1 ? "success" : "secondary"}
+          color={activeTab === SCREEN_TAB.MY_POKEMON_TAB ? "success" : "secondary"}
         >
           {`My Pokémon (${myPokemonCounter})`}
         </Button>

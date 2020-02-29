@@ -22,6 +22,7 @@ const styles = {
 };
 
 function MyPokemonPages(props) {
+  const activeTab = "MY_POKEMON_TAB";
   const { myPokemon } = props;
 
   const handleBackToTop = () => {
@@ -51,7 +52,7 @@ function MyPokemonPages(props) {
 
   return (
     <>
-    <NavigationsTab />
+    <NavigationsTab activeTab={activeTab} />
     <Container>
       {/* Render MyPokemon */}
       {renderMyPokemonTab()}

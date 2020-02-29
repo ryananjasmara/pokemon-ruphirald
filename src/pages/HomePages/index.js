@@ -23,6 +23,7 @@ const styles = {
 };
 
 function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
+  const activeTab = "HOME_TAB";
 
   useEffect(() => {
     if (pokemonList.data.length === 0){
@@ -37,7 +38,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
   function renderPokedexTab(data) {
     return (
       <>
-      <NavigationsTab />
+      <NavigationsTab activeTab={activeTab} />
       <Row style={styles.cardContainer}>
         {data.map((item, index) => {
             const pokemonName = capitalizeFirstLetter(item.name);
