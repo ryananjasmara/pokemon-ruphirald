@@ -15,7 +15,6 @@ const pokemonList = {
         }
     },
     success(prevState, data) {
-      console.log(prevState);
       return {
         ...prevState,
         data: [...prevState.data, ...data],
@@ -34,7 +33,6 @@ const pokemonList = {
   },
   effects: {
     async fetchPokemonList(payload) {
-      console.log(payload);
       this.request();
       const { offset } = payload;
       return axios
