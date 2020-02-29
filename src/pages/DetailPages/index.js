@@ -16,6 +16,7 @@ const styles = {
 };
 
 function DetailPages(props) {
+  const activeTab = "HOME_TAB";
   const [pokemonDetail, setPokemonDetail] = useState("");
   const [pokemonImage, setPokemonImage] = useState("");
   const [isFetched, setIsFetched] = useState(false);
@@ -64,7 +65,7 @@ function DetailPages(props) {
 
   return (
     <>
-    <NavigationsTab />
+    <NavigationsTab activeTab={activeTab} />
     <Container>
       {/* Conditional Render PokemonDetail or Spinner */}
       <IfComponent
