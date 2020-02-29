@@ -63,9 +63,13 @@ function DetailPages(props) {
     }, 3000);
   }
 
+  function modifiedRoutePath(tabName) {
+    return tabName.replace(':id', id)
+  }
+
   return (
     <>
-    <NavigationsTab activeTab={PAGES.DETAIL_POKEMON} />
+    <NavigationsTab activeTab={modifiedRoutePath(PAGES.DETAIL_POKEMON)} id={id} />
     <Container>
       {/* Conditional Render PokemonDetail or Spinner */}
       <IfComponent
