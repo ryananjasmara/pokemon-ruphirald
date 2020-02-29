@@ -27,23 +27,9 @@ const SCREEN_TAB = {
 function NavigationsTab(props) {
   // pokemon count from rematch
   const { myPokemon, activeTab } = props;
-  console.log(activeTab);
   let myPokemonCounter = myPokemon && myPokemon.length;
   if (!myPokemonCounter) {
     myPokemonCounter = 0;
-  }
-  // locally get last active tab index incase if page reloaded
-  const localCurrentTab = localStorage.getItem("curr");
-  // if the local data empty, the initial state will be 0
-  let initialCurrentTab = 0;
-  if (localCurrentTab) {
-    initialCurrentTab = parseInt(localCurrentTab);
-  }
-  // state for tab active
-  const [currentTab, setCurrentTab] = useState(initialCurrentTab);
-  // handle to save state to storage
-  function saveToStorage(value) {
-    localStorage.setItem("curr", value);
   }
 
   return (
@@ -51,10 +37,6 @@ function NavigationsTab(props) {
       <Link
         style={styles.link}
         to={`/`}
-        onClick={() => {
-          setCurrentTab(0);
-          saveToStorage(0);
-        }}
       >
         <Button
           style={styles.navButton}
@@ -66,10 +48,6 @@ function NavigationsTab(props) {
       <Link
         style={styles.link}
         to={`/mypokemon`}
-        onClick={() => {
-          setCurrentTab(1);
-          saveToStorage(1);
-        }}
       >
         <Button
           disabled={myPokemonCounter === 0 ? true : false}
@@ -85,8 +63,6 @@ function NavigationsTab(props) {
         onClick={() => {
           const confirm = window.confirm('Do you really want to clear your pokemon data?');
           if (confirm) {
-            setCurrentTab(0);
-            saveToStorage(0);
             props.clearData();
           }
         }}
