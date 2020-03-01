@@ -34,7 +34,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
       if (fetchCondition) {
         fetchPokemonList(pokemonList.data.length);
       }
-    }, fetchCondition ? 250 : 0);
+    }, fetchCondition ? 1000 : 0);
     // cleanup debounce timer
     return () => {
       clearTimeout(debounce);
@@ -89,7 +89,7 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
       {/* Load More Button, etc */}
       <div className="footer">
         <IfComponent
-          ifStatement={isFetching}
+          ifStatement={!isFetching} // make the spinner always show, since this is infinite scroll, it doesnt matter.
           thenRender={
             <Spinner color="success" />
           }
