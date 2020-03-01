@@ -15,7 +15,6 @@ const pokemonList = {
         }
     },
     success(prevState, data) {
-      console.log('prevstate', prevState);
       return {
         ...prevState,
         data: [...prevState.data, ...data],
@@ -36,11 +35,9 @@ const pokemonList = {
     async fetchPokemonList(payload) {
       this.request();
       const { offset } = payload;
-      console.log(payload);
       return axios
       .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=10`)
       .then(res => {
-        console.log(res);
         this.success(res.data.results);
       }).catch(error => {
         this.failure(error);
