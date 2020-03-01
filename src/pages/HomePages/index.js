@@ -24,6 +24,7 @@ const styles = {
 };
 
 function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
+  console.log('pklist', pokemonList);
   const onScrollEnded = useCallback(() => {
     const scrollTop = document.documentElement && document.documentElement.scrollTop;
     const offsetHeight = document.getElementById("root") && document.getElementById("root").offsetHeight;
@@ -32,14 +33,14 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
     const fetchCondition = window.innerHeight + scrollTop === offsetHeight;
     const debounce = setTimeout(() => {
       if (fetchCondition) {
-        fetchPokemonList();
+        fetchPokemonList(pokemonList.data.length);
       }
     }, fetchCondition ? 250 : 0);
     // cleanup debounce timer
     return () => {
       clearTimeout(debounce);
     }
-  }, [fetchPokemonList]);
+  }, [fetchPokemonList, pokemonList.data.length]);
 
   useEffect(() => {
     window.addEventListener("scroll", onScrollEnded);
