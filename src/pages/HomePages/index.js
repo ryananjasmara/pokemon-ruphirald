@@ -24,7 +24,6 @@ const styles = {
 };
 
 function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
-  console.log('pklist', pokemonList);
   const onScrollEnded = useCallback(() => {
     const scrollTop = document.documentElement && document.documentElement.scrollTop;
     const offsetHeight = document.getElementById("root") && document.getElementById("root").offsetHeight;
