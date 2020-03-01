@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { connect } from 'react-redux';
 import { Row, Container, Button, Spinner } from "reactstrap";
 import { capitalizeFirstLetter } from "../../utils/CommonFunction";
@@ -24,6 +24,22 @@ const styles = {
 };
 
 function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
+  const onScrollEnded = useCallback(() => {
+    const scrollTop = document.documentElement && document.documentElement.scrollTop;
+    const offsetHeight = document.getElementById("root") && document.getElementById("root").offsetHeight;
+
+    if (window.innerHeight + scrollTop === offsetHeight) {
+      fetchPokemonList();
+    }
+  }, [fetchPokemonList]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScrollEnded);
+    return () => {
+      window.removeEventListener("scroll", onScrollEnded);
+    }
+  }, [onScrollEnded]);
+
   useEffect(() => {
     if (pokemonList.data.length === 0){
       fetchPokemonList(0);
@@ -65,18 +81,10 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
       {/* Load More Button, etc */}
       <div className="footer">
         <IfComponent
-          ifStatement={!isFetching}
+          ifStatement={isFetching}
           thenRender={
-            <Button
-              color="success"
-              onClick={() => {
-                fetchPokemonList(data.length);
-              }}
-            >
-              Load More
-            </Button>
+            <Spinner color="success" />
           }
-          otherRender={<Spinner color="success" />}
         />
       </div>
 
