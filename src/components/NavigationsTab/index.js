@@ -20,7 +20,6 @@ const styles = {
 };
 
 function NavigationsTab(props) {
-  console.log(props);
   // pokemon count from rematch
   const { myPokemon, activeTab } = props;
   let myPokemonCounter = myPokemon && myPokemon.length;
