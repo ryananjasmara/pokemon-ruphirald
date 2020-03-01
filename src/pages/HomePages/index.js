@@ -28,8 +28,16 @@ function HomePages({ handleChangePages, pokemonList, fetchPokemonList }) {
     const scrollTop = document.documentElement && document.documentElement.scrollTop;
     const offsetHeight = document.getElementById("root") && document.getElementById("root").offsetHeight;
 
-    if (window.innerHeight + scrollTop === offsetHeight) {
-      fetchPokemonList();
+    // debounce fetch
+    const fetchCondition = window.innerHeight + scrollTop === offsetHeight;
+    const debounce = setTimeout(() => {
+      if (fetchCondition) {
+        fetchPokemonList();
+      }
+    }, fetchCondition ? 250 : 0);
+    // cleanup debounce timer
+    return () => {
+      clearTimeout(debounce);
     }
   }, [fetchPokemonList]);
 
