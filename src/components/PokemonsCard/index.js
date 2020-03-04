@@ -25,9 +25,13 @@ const styles = {
   }
 };
 
-function PokemonsCard({ index, pokemonName, pokemonNick }) {
+function PokemonsCard({ index, pokemonName, pokemonNick, pokemonImage }) {
   const [isTouched, setIsTouched] = useState(false);
-  const pokemonImage = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`;
+
+  const getPokemonImage = () => {
+    console.log(pokemonImage);
+    return pokemonImage || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`;
+  }
 
   // Mouse Down
   const handleTouched = () => {
@@ -63,7 +67,7 @@ function PokemonsCard({ index, pokemonName, pokemonNick }) {
             thenRender={<CardText>({pokemonNick})</CardText>}
           />
         </CardBody>
-        <img id={pokemonName} width="200" src={pokemonImage} alt="" />
+        <img id={pokemonName} width="200" src={getPokemonImage()} alt="" />
       </Card>
     </Link>
   );

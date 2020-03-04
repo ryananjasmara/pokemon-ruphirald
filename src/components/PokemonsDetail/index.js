@@ -60,7 +60,7 @@ function PokemonsDetail({
   handleSavePokemon
 }) {
   // Props -> Pokemon Detail
-  const { moves, abilities, types, species, weight, height } = pokemonDetail;
+  const { moves, abilities, types, species, weight, height, rarity, image } = pokemonDetail;
   // Moves Collapse
   const [isShow, setIsShow] = useState(false);
   const handleMovesCollapse = () => {
@@ -136,11 +136,14 @@ function PokemonsDetail({
     setIsModalVisible(false);
     setIsResulting(false);
     if (success) {
+      console.log()
       const nickname = document.getElementById("pokenick").value;
       const data = {
         id: pokemonId,
         species: species.name,
-        nickname
+        nickname,
+        rarity,
+        image
       };
       handleSavePokemon(data);
     }

@@ -25,8 +25,7 @@ function DetailPages(props) {
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetched]);
+  }, []);
 
   function getData() {
     axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => {
@@ -43,14 +42,31 @@ function DetailPages(props) {
       const shinySprite = [];
       imageArray.reverse();
       imageArray.map((item) => {
-        if (item.altText.includes('Shiny')) {
+        if (item.altText.includes("Shiny")) {
           shinySprite.push(item);
         } else {
           defaultSprite.push(item);
         }
       })
-      setPokemonImage([...defaultSprite, ...shinySprite]);
-      setPokemonDetail(res.data);
+      // shiny chances
+      const chance = Math.floor(Math.random() * 100);
+      let rarity;
+      let image;
+      if (chance >= 50) {
+        setPokemonImage(shinySprite);
+        rarity = "shiny";
+        image = shinySprite[0].src;
+      } else {
+        setPokemonImage(defaultSprite);
+        rarity = "default";
+        image = defaultSprite[0].src;
+      }
+      const pokemonData = {
+        ...res.data,
+        rarity,
+        image
+      }
+      setPokemonDetail(pokemonData);
       setIsFetched(true);
     });
   }
