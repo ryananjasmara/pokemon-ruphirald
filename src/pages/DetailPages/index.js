@@ -32,7 +32,7 @@ function DetailPages(props) {
     getData(shiny);
   }, []);
 
-  function getData() {
+  function getData(shiny) {
     axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => {
       const { sprites } = res.data;
       const imageArray = [];
@@ -53,7 +53,11 @@ function DetailPages(props) {
           defaultSprite.push(item);
         }
       })
-      setPokemonImage([...defaultSprite, ...shinySprite]);
+      if (shiny) {
+        setPokemonImage(shinySprite);
+      } else {
+        setPokemonImage(defaultSprite);
+      }
       setPokemonDetail(res.data);
       setIsFetched(true);
     });
