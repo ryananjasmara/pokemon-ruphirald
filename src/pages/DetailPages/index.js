@@ -20,19 +20,15 @@ function DetailPages(props) {
   const [pokemonDetail, setPokemonDetail] = useState("");
   const [pokemonImage, setPokemonImage] = useState("");
   const [isFetched, setIsFetched] = useState(false);
+  const [isDefault, setIsDefault] = useState(true);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
-    const chance = Math.floor(Math.random() * 100);
-    let shiny = false;
-    if (chance >= 50) {
-      shiny = true;
-    }
-    getData(shiny);
+    getData();
   }, []);
 
-  function getData(shiny) {
+  function getData() {
     axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => {
       const { sprites } = res.data;
       const imageArray = [];
@@ -53,8 +49,11 @@ function DetailPages(props) {
           defaultSprite.push(item);
         }
       })
-      if (shiny) {
+      // shiny chances
+      const chance = Math.floor(Math.random() * 100);
+      if (chance >= 50) {
         setPokemonImage(shinySprite);
+        setIsDefault(false);
       } else {
         setPokemonImage(defaultSprite);
       }
