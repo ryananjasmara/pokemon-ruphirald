@@ -20,7 +20,6 @@ function DetailPages(props) {
   const [pokemonDetail, setPokemonDetail] = useState("");
   const [pokemonImage, setPokemonImage] = useState("");
   const [isFetched, setIsFetched] = useState(false);
-  const [isDefault, setIsDefault] = useState(true);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const { id } = useParams();
 
@@ -43,7 +42,7 @@ function DetailPages(props) {
       const shinySprite = [];
       imageArray.reverse();
       imageArray.map((item) => {
-        if (item.altText.includes('Shiny')) {
+        if (item.altText.includes("Shiny")) {
           shinySprite.push(item);
         } else {
           defaultSprite.push(item);
@@ -51,13 +50,19 @@ function DetailPages(props) {
       })
       // shiny chances
       const chance = Math.floor(Math.random() * 100);
+      let rarity;
       if (chance >= 50) {
         setPokemonImage(shinySprite);
-        setIsDefault(false);
+        rarity = "shiny";
       } else {
         setPokemonImage(defaultSprite);
+        rarity = "default";
       }
-      setPokemonDetail(res.data);
+      const pokemonData = {
+        ...res.data,
+        rarity
+      }
+      setPokemonDetail(pokemonData);
       setIsFetched(true);
     });
   }
