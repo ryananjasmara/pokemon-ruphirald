@@ -24,9 +24,13 @@ function DetailPages(props) {
   const { id } = useParams();
 
   useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetched]);
+    const chance = Math.floor(Math.random() * 100);
+    let shiny = false;
+    if (chance >= 50) {
+      shiny = true;
+    }
+    getData(shiny);
+  }, []);
 
   function getData() {
     axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(res => {
