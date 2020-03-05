@@ -52,7 +52,7 @@ function DetailPages(props) {
       const chance = Math.floor(Math.random() * 100);
       let rarity;
       let image;
-      if (chance >= 50) {
+      if (chance >= 90) {
         setPokemonImage(shinySprite);
         rarity = "shiny";
         image = shinySprite[0].src;
