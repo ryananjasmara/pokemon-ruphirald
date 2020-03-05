@@ -51,21 +51,20 @@ function DetailPages(props) {
       // shiny chances
       const chance = Math.floor(Math.random() * 100);
       let rarity;
-<<<<<<< Updated upstream
-      if (chance >= 50) {
-=======
       let image;
       if (chance >= 90) {
->>>>>>> Stashed changes
         setPokemonImage(shinySprite);
         rarity = "shiny";
+        image = shinySprite[0].src;
       } else {
         setPokemonImage(defaultSprite);
         rarity = "default";
+        image = defaultSprite[0].src;
       }
       const pokemonData = {
         ...res.data,
-        rarity
+        rarity,
+        image
       }
       setPokemonDetail(pokemonData);
       setIsFetched(true);

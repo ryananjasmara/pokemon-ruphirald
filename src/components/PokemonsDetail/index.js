@@ -60,7 +60,7 @@ function PokemonsDetail({
   handleSavePokemon
 }) {
   // Props -> Pokemon Detail
-  const { moves, abilities, types, species, weight, height, rarity } = pokemonDetail;
+  const { moves, abilities, types, species, weight, height, rarity, image } = pokemonDetail;
   // Moves Collapse
   const [isShow, setIsShow] = useState(false);
   const handleMovesCollapse = () => {
@@ -142,7 +142,8 @@ function PokemonsDetail({
         id: pokemonId,
         species: species.name,
         nickname,
-        rarity
+        rarity,
+        image
       };
       handleSavePokemon(data);
     }

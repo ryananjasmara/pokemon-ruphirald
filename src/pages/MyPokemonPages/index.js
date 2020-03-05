@@ -37,12 +37,14 @@ function MyPokemonPages(props) {
             const pokemonName = capitalizeFirstLetter(item.species);
             const pokemonNick = item.nickname;
             const pokemonId = item.id;
+            const pokemonImage = item.image;
             return (
               <PokemonsCard
                 key={index}
                 index={pokemonId}
                 pokemonName={pokemonName}
                 pokemonNick={pokemonNick}
+                pokemonImage={pokemonImage}
               />
             );
           })}
