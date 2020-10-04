@@ -34,7 +34,7 @@ function DetailPages(props) {
       for (const key in sprites) {
         const altText = formatCarouselCaption(key);
         const src = sprites[key];
-        if (altText && src) {
+        if (altText && src && key !== "versions" && key !== "other" ) {
           imageArray.push({ src, altText });
         }
       }
