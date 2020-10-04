@@ -35,6 +35,7 @@ const pokemonList = {
     async fetchPokemonList(payload) {
       this.request();
       const { offset } = payload;
+      //api issue
       return axios
       .get(`https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=10`)
       .then(res => {
